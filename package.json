@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "pnpm build",
-    "build": "npx tsc -p tsconfig.json && pnpm run copy-package",
+    "build": "npx tsc -p tsconfig.json",
     "build:dev": "npx tsc -p tsconfig.json && pnpm run copy-package && pnpm run copy-to-server && pnpm run copy-to-shared",
     "build-pipeline": "npx tsc -p tsconfig.json && pnpm run copy-package && pnpm run copy-to-server-pipeline && pnpm run copy-to-shared-pipeline",
     "test": "jest",
