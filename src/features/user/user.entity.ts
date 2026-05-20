@@ -17,9 +17,11 @@ export class UserEntity extends Entity {
   notificationToken: string;
   email: string;
   image?: string;
+  role: string;
 
   private constructor(attributes: UserAttributes) {
-    const { id, name, notificationToken, email, image, isActive } = attributes;
+    const { id, name, notificationToken, email, image, isActive, role } =
+      attributes;
     super(id, new Date());
     this.name = name;
     this.email = email;
@@ -27,6 +29,7 @@ export class UserEntity extends Entity {
     this.notificationToken = notificationToken;
     this.email = email;
     this.isActive = isActive;
+    this.role = role;
   }
 
   static build(params: UserAttributes): DomainEvent {
