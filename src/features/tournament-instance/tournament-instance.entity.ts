@@ -1,6 +1,6 @@
 import { BuiltEntityDomainEvent, DomainEvent, Entity, Id } from '../../core';
 
-export type TournamentInstanceState = 'active' | 'inactive' | 'supended' | 'terminated';
+export type TournamentInstanceState = 'active' | 'inactive' | 'suspended' | 'terminated';
 export interface TournamentInstanceAttributes {
   id: Id;
   name: string;

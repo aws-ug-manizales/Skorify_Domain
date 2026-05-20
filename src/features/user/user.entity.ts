@@ -1,5 +1,5 @@
-import { BuiltEntityDomainEvent, DomainEvent } from '../../core';
-import { BaseAttributes, Entity, Id } from '../../core/entity';
+import { BuiltEntityDomainEvent, DomainEvent } from "../../core";
+import { BaseAttributes, Entity, Id } from "../../core/entity";
 
 export interface UserAttributes extends BaseAttributes {
   id: Id;
@@ -8,6 +8,7 @@ export interface UserAttributes extends BaseAttributes {
   notificationToken: string;
   email: string;
   image?: string;
+  role: "general" | "admin";
 }
 
 export class UserEntity extends Entity {
