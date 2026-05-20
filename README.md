@@ -1,0 +1,2 @@
+# Skorify_Domain
+Dominio
