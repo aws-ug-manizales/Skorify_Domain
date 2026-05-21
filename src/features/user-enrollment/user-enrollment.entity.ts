@@ -45,6 +45,7 @@ export class UserEnrollmentEntity extends Entity {
       currentScore,
       streak,
       maxStreak,
+      createdAt,
     } = attributes;
     super(id, new Date());
     this.userId = userId;
