@@ -1,12 +1,12 @@
-import { BuiltEntityDomainEvent, DomainEvent } from '../../core';
-import { Entity, Id } from '../../core/entity';
-import { ExactScoreRule } from './scoreRules';
+import { BuiltEntityDomainEvent, DomainEvent } from "../../core";
+import { BaseAttributes, Entity, Id } from "../../core/entity";
+import { ExactScoreRule } from "./scoreRules";
 import {
   PredictionRuleBreakdown,
   PredictionScoreResult,
   PredictionScoreRuleset,
   Rule,
-} from './scoreRules/prediction-score.ruleset';
+} from "./scoreRules/prediction-score.ruleset";
 
 export interface StreakBonusConfig {
   key: number;
@@ -18,8 +18,7 @@ export interface PredictionScoringConfig {
   streakBonusRules: StreakBonusConfig[];
 }
 
-export interface PredictionAttributes {
-  id: Id;
+export interface PredictionAttributes extends BaseAttributes {
   userId: Id;
   userEnrollmentId: Id;
   tournamentInstanceId: Id;
@@ -60,7 +59,9 @@ export class PredictionEntity extends Entity {
     return BuiltEntityDomainEvent(new PredictionEntity(params));
   }
 
-  static forSimulation(params: SimulationPredictionAttribute): PredictionEntity {
+  static forSimulation(
+    params: SimulationPredictionAttribute,
+  ): PredictionEntity {
     return new PredictionEntity({
       id: this.generateEmptyId(),
       userId: this.generateEmptyId(),
@@ -71,6 +72,7 @@ export class PredictionEntity extends Entity {
       awayScore: params.awayScore,
       earnedPoints: 0,
       hasExactResult: false,
+      createdAt: new Date(),
     });
   }
 
@@ -93,22 +95,26 @@ export class PredictionEntity extends Entity {
     });
 
     this.setHasExactResult(result.breakdown);
-    this.earnedPoints = result.total
+    this.earnedPoints = result.total;
 
     if (streakBonusPoints > 0 && this.hasExactResult) {
-      result.breakdown.push({ points: streakBonusPoints, rule: "StreakBonusPoints" })
-      this.earnedPoints += streakBonusPoints
+      result.breakdown.push({
+        points: streakBonusPoints,
+        rule: "StreakBonusPoints",
+      });
+      this.earnedPoints += streakBonusPoints;
     }
 
     return result;
   }
 
   private setHasExactResult(rulesApplied: PredictionRuleBreakdown[]) {
-    this.hasExactResult = !!rulesApplied.find((r) => r.rule == ExactScoreRule.name);
+    this.hasExactResult = !!rulesApplied.find(
+      (r) => r.rule == ExactScoreRule.name,
+    );
   }
 
   private static generateEmptyId(): Id {
-    return "0-0-0-0-0"
+    return "0-0-0-0-0";
   }
-
 }

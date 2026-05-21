@@ -1,12 +1,12 @@
-import { BuiltEntityDomainEvent, DomainEvent, Entity, Id } from '../../core';
+import { BaseAttributes } from "../../core/entity";
+import { BuiltEntityDomainEvent, DomainEvent, Entity, Id } from "../../core";
 
 export enum MatchType {
-  SingleMatchPerRound = 'single_match_per_round',
-  HomeAndAwayPerRound = 'home_and_away_per_round',
+  SingleMatchPerRound = "single_match_per_round",
+  HomeAndAwayPerRound = "home_and_away_per_round",
 }
 
-export interface TournamentAttributes {
-  id: Id;
+export interface TournamentAttributes extends BaseAttributes {
   name: string;
   startDate: Date;
   endDate: Date;

@@ -1,8 +1,12 @@
-import { BuiltEntityDomainEvent, DomainEvent, Entity, Id } from '../../core';
+import { BaseAttributes } from "../../core/entity";
+import { BuiltEntityDomainEvent, DomainEvent, Entity, Id } from "../../core";
 
-export type TournamentInstanceState = 'active' | 'inactive' | 'suspended' | 'terminated';
-export interface TournamentInstanceAttributes {
-  id: Id;
+export type TournamentInstanceState =
+  | "active"
+  | "inactive"
+  | "suspended"
+  | "terminated";
+export interface TournamentInstanceAttributes extends BaseAttributes {
   name: string;
   ownerId: Id;
   tournamentId: Id;

@@ -1,12 +1,11 @@
-import { BuiltEntityDomainEvent, DomainEvent } from '../../core';
-import { Entity, Id } from '../../core/entity';
+import { BuiltEntityDomainEvent, DomainEvent } from "../../core";
+import { BaseAttributes, Entity, Id } from "../../core/entity";
 
 export interface SimulationUserEnrollmentAttribute {
   streak: number;
 }
 
-export interface UserEnrollmentAttributes {
-  id: Id;
+export interface UserEnrollmentAttributes extends BaseAttributes {
   userId: Id;
   tournamentInstanceId: Id;
   tournamentId: Id;
@@ -34,7 +33,6 @@ export class UserEnrollmentEntity extends Entity {
   streak: number;
   maxStreak: number;
 
-
   private constructor(attributes: UserEnrollmentAttributes) {
     const {
       id,
@@ -58,29 +56,30 @@ export class UserEnrollmentEntity extends Entity {
     this.currentScore = currentScore;
     this.streak = streak;
     this.maxStreak = maxStreak;
-
-
   }
 
   static build(params: UserEnrollmentAttributes): DomainEvent {
     return BuiltEntityDomainEvent(new UserEnrollmentEntity(params));
   }
 
-  static forSimulation({ streak }: SimulationUserEnrollmentAttribute): DomainEvent {
-    return BuiltEntityDomainEvent(new UserEnrollmentEntity(
-      {
-        id: '0-0-0-0-0',
-        userId: '0-0-0-0-0',
-        tournamentInstanceId: '0-0-0-0-0',
-        tournamentId: '0-0-0-0-0',
+  static forSimulation({
+    streak,
+  }: SimulationUserEnrollmentAttribute): DomainEvent {
+    return BuiltEntityDomainEvent(
+      new UserEnrollmentEntity({
+        id: "0-0-0-0-0",
+        userId: "0-0-0-0-0",
+        tournamentInstanceId: "0-0-0-0-0",
+        tournamentId: "0-0-0-0-0",
         joinedAt: new Date(),
         lastPosition: null,
         currentPosition: null,
         currentScore: 0,
         streak,
         maxStreak: 0,
-      },
-    ));
+        createdAt: new Date(),
+      }),
+    );
   }
 
   getStreakBonusPoints(): number {
@@ -88,7 +87,7 @@ export class UserEnrollmentEntity extends Entity {
   }
 
   static getStreakBonusRules(): Map<number, number> {
-    return streakBonusRules
+    return streakBonusRules;
   }
 
   applyScore(points: number, isExact: boolean): void {
@@ -98,7 +97,7 @@ export class UserEnrollmentEntity extends Entity {
     } else {
       this.streak = 0;
     }
-    this.verifyMaxStreak()
+    this.verifyMaxStreak();
   }
 
   private verifyMaxStreak(): void {
@@ -108,6 +107,6 @@ export class UserEnrollmentEntity extends Entity {
   }
 
   private static generateEmptyId(): Id {
-    return "0-0-0-0-0"
+    return "0-0-0-0-0";
   }
 }

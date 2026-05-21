@@ -1,11 +1,10 @@
-import { BuiltEntityDomainEvent, DomainEvent } from '../../core';
-import { Entity, Id } from '../../core/entity';
-import { MatchState, matchStateCollection, MatchStatus } from './match.state';
+import { BuiltEntityDomainEvent, DomainEvent } from "../../core";
+import { BaseAttributes, Entity, Id } from "../../core/entity";
+import { MatchState, matchStateCollection, MatchStatus } from "./match.state";
 
-export type MatchStage = 'group' | 'finals';
+export type MatchStage = "group" | "finals";
 
-export interface MatchAttributes {
-  id: Id;
+export interface MatchAttributes extends BaseAttributes {
   homeTeamId: Id;
   awayTeamId: Id;
   tournamentId: Id;
@@ -15,9 +14,6 @@ export interface MatchAttributes {
   status?: MatchStatus;
   stage?: MatchStage;
   venue?: string | null;
-  createdAt: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
 }
 
 export class MatchEntity extends Entity {

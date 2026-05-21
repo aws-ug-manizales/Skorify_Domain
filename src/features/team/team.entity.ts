@@ -1,8 +1,7 @@
 import { BuiltEntityDomainEvent, DomainEvent } from "../../core";
-import { Entity, Id } from "../../core/entity";
+import { BaseAttributes, Entity, Id } from "../../core/entity";
 
-export interface TeamAttributes {
-  id: Id;
+export interface TeamAttributes extends BaseAttributes{
   name: string;
   tournamentId: Id;
   shieldUrl?: string;
