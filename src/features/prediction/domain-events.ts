@@ -1,6 +1,6 @@
-import { DomainEventKind } from '../../core';
-import { PredictionScoringConfig, PredictionEntity } from './prediction.entity';
-import { PredictionScoreResult } from './scoreRules/prediction-score.ruleset';
+import { DomainEventKind } from "../../core";
+import { PredictionScoringConfig, PredictionEntity } from "./prediction.entity";
+import { PredictionScoreResult } from "./scoreRules/prediction-score.ruleset";
 
 export const BasicDomainEvent = DomainEventKind("BasicDomainEvent");
 
@@ -8,37 +8,53 @@ export const GottenPredictionsDomainEvent = DomainEventKind<PredictionEntity[]>(
   "GottenPredictionsDomainEvent",
 );
 
-export const UserNotActiveDomainEvent = DomainEventKind('UserNotActiveDomainEvent');
-export const UserAlreadyPredictedDomainEvent = DomainEventKind('UserAlreadyPredictedDomainEvent');
-export const PredictionNotCreatedDomainEvent = DomainEventKind('PredictionNotCreatedDomainEvent');
+export const UserNotActiveDomainEvent = DomainEventKind(
+  "UserNotActiveDomainEvent",
+);
+export const UserAlreadyPredictedDomainEvent = DomainEventKind(
+  "UserAlreadyPredictedDomainEvent",
+);
+export const PredictionNotCreatedDomainEvent = DomainEventKind(
+  "PredictionNotCreatedDomainEvent",
+);
 export const PredictionCreatedDomainEvent = DomainEventKind<PredictionEntity>(
-  'PredictionCreatedDomainEvent',
+  "PredictionCreatedDomainEvent",
 );
-export const MatchBetabilityCheckedDomainEvent = DomainEventKind<{ canBet: boolean }>(
-  'MatchBetabilityCheckedDomainEvent',
-);
+export const MatchBetabilityCheckedDomainEvent = DomainEventKind<{
+  canBet: boolean;
+}>("MatchBetabilityCheckedDomainEvent");
 
-export const GottenPredictionsByMatchDomainEvent = DomainEventKind<PredictionEntity[]>(
-  'GottenPredictionsByMatchDomainEvent',
-);
-export const GottenPredictionsByUserDomainEvent = DomainEventKind<PredictionEntity[]>(
-  'GottenPredictionsByUserDomainEvent',
-);
+export const GottenPredictionsByMatchDomainEvent = DomainEventKind<
+  PredictionEntity[]
+>("GottenPredictionsByMatchDomainEvent");
+export const GottenPredictionsByMatchAndTournamentInstanceDomainEvent =
+  DomainEventKind<PredictionEntity[]>(
+    "GottenPredictionsByMatchAndTournamentInstanceDomainEvent",
+  );
+export const GottenPredictionsByUserDomainEvent = DomainEventKind<
+  PredictionEntity[]
+>("GottenPredictionsByUserDomainEvent");
 
-export const NotGottenPredictionDomainEvent = DomainEventKind('NotGottenPredictionDomainEvent');
+export const NotGottenPredictionDomainEvent = DomainEventKind(
+  "NotGottenPredictionDomainEvent",
+);
 export const GottenPredictionDomainEvent = DomainEventKind<PredictionEntity>(
-  'GottenPredictionDomainEvent',
+  "GottenPredictionDomainEvent",
 );
 
 export const PassedPredictionWindowDomainEvent = DomainEventKind(
-  'PassedPredictionWindowDomainEvent',
+  "PassedPredictionWindowDomainEvent",
 );
 
 export const PredictionEditedDomainEvent = DomainEventKind<PredictionEntity>(
-  'PredictionEditedDomainEvent',
+  "PredictionEditedDomainEvent",
 );
 
-export const NotEditedPredictionDomainEvent = DomainEventKind('NotEditedPredictionDomainEvent');
+export const NotEditedPredictionDomainEvent = DomainEventKind(
+  "NotEditedPredictionDomainEvent",
+);
 
-export const GottenPredictionRulesDomainEvent = DomainEventKind<PredictionScoringConfig>('GottenPredictionRulesDomainEvent');
-export const SimulatedPredictionDomainEvent = DomainEventKind<PredictionScoreResult>('SimulatedPredictionDomainEvent');
+export const GottenPredictionRulesDomainEvent =
+  DomainEventKind<PredictionScoringConfig>("GottenPredictionRulesDomainEvent");
+export const SimulatedPredictionDomainEvent =
+  DomainEventKind<PredictionScoreResult>("SimulatedPredictionDomainEvent");
