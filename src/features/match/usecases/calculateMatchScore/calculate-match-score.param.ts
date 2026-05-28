@@ -1,4 +1,6 @@
+import { Id } from "../../../../core";
+
 export interface CalculateMatchScoreParam {
-  matchId: string;
-  tournamentInstanceId: string;
+  matchId: Id;
+  tournamentInstanceId: Id;
 }
