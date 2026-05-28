@@ -1,6 +1,9 @@
-import { Id } from '../../../../core';
-import { PredictionEntity } from '../../prediction.entity';
+import { Id } from "../../../../core";
 
 export interface EditPredictionDirectlyParam {
-  prediction: PredictionEntity;
+  predictionId: Id;
+  awayScore: number;
+  homeScore: number;
+  earnedPoints: number;
+  hasExactResult: boolean;
 }
