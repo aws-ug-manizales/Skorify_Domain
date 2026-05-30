@@ -5,6 +5,7 @@ export interface UserAttributes extends BaseAttributes {
   name: string;
   isActive: boolean;
   notificationToken: string;
+  sub: string;
   email: string;
   image?: string;
   role: "general" | "admin";
@@ -14,18 +15,20 @@ export class UserEntity extends Entity {
   name: string;
   isActive: boolean = false;
   notificationToken: string;
+  sub: string;
   email: string;
   image?: string;
   role: string;
 
   private constructor(attributes: UserAttributes) {
-    const { id, name, notificationToken, email, image, isActive, role } =
+    const { id, name, notificationToken, email, image, isActive, role, sub } =
       attributes;
     super(id, new Date());
     this.name = name;
     this.email = email;
     this.image = image;
     this.notificationToken = notificationToken;
+    this.sub = sub;
     this.email = email;
     this.isActive = isActive;
     this.role = role;
