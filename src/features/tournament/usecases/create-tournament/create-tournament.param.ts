@@ -1,3 +1,4 @@
+import { Id } from "../../../../core/entity";
 import { MatchType } from "../../tournament.entity";
 
 export interface CreateTournamentParam {
@@ -5,4 +6,5 @@ export interface CreateTournamentParam {
   matchType: MatchType;
   startDate: Date;
   endDate: Date;
+  userId: Id;
 }
