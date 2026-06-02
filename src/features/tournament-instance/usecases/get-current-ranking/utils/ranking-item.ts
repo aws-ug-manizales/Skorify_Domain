@@ -3,8 +3,10 @@ import { Id } from "../../../../../core";
 export interface RankingItem {
   userId: Id;
   userName: string;
-  // userImage: string;
-  position: null | number;
+  currentPosition: number;
+  lastPosition: number;
+  score: number;
   points: number;
+  maxStreak: number;
   streak: number;
 }
