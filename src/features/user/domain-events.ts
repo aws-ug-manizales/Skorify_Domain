@@ -13,6 +13,10 @@ export const GottenUserDomainEvent = DomainEventKind<UserEntity>(
   "GottenUserDomainEvent",
 );
 
+export const GottenUsersDomainEvent = DomainEventKind<UserEntity[]>(
+  "GottenUsersDomainEvent",
+);
+
 export const NotificationTokenAssignedDomainEvent = DomainEventKind<UserEntity>(
   "NotificationTokenAssignedDomainEvent",
 );
