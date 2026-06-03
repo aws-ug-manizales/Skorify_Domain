@@ -4,6 +4,7 @@ export {
   UserEnrollmentEntity,
   SimulationUserEnrollmentAttribute,
   UserEnrollmentAttributes,
+  streakBonusRules
 } from "./user-enrollment.entity";
 export { UserEnrollmentContract } from "./user-enrollment.contract";
 

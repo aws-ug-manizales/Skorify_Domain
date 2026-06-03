@@ -16,7 +16,7 @@ export interface UserEnrollmentAttributes extends BaseAttributes {
   streak: number;
   maxStreak: number;
 }
-const streakBonusRules: Map<number, number> = new Map<number, number>();
+export const streakBonusRules: Map<number, number> = new Map<number, number>();
 
 streakBonusRules.set(3, 1);
 streakBonusRules.set(5, 2);
