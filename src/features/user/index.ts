@@ -6,8 +6,8 @@ export { UserContract } from "./user.contract";
 export { GetUserByIdParam } from "./usecases/get-user-by-id/get-user-by-id.param";
 export { GetUserByIdUsecase } from "./usecases/get-user-by-id/get-user-by-id.usecase";
 
-export { GetUserByIdsParam } from "./usecases/get-user-by-ids/get-user-by-ids.param";
-export { GetUserByIdsUsecase } from "./usecases/get-user-by-ids/get-user-by-ids.usecase";
+export { GetUsersByIdsParam } from "./usecases/get-user-by-ids/get-users-by-ids.param";
+export { GetUsersByIdsUsecase } from "./usecases/get-user-by-ids/get-users-by-ids.usecase";
 
 export { GetUserBySubParam } from "./usecases/get-user-by-sub/get-user-by-sub.param";
 export { GetUserBySubUsecase } from "./usecases/get-user-by-sub/get-user-by-sub.usecase";
