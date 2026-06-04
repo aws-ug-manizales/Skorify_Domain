@@ -1,10 +1,11 @@
 export { MatchAttributes, MatchEntity, MatchStage } from './match.entity';
 export {
-  CancelledState,
+  CalculatedState, CancelledState,
   DraftState,
   FinishedState,
-  InProgressState,
-  MatchState, matchStateCollection, MatchStatus,
+  InProgressState, MatchState,
+  matchStateCollection,
+  MatchStatus,
   ScheduledState
 } from './match.state';
 

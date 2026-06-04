@@ -80,6 +80,10 @@ export const MatchAlreadyClosedDomainEvent = DomainEventKind<MatchEntity>(
   "MatchAlreadyClosedDomainEvent",
 );
 
+export const CalculatedMatchDomainEvent = DomainEventKind<MatchEntity>(
+  "CalculatedMatchDomainEvent",
+);
+
 export const GottenMatchesByTournamentDomainEvent = DomainEventKind<
   {
     match: MatchEntity;
