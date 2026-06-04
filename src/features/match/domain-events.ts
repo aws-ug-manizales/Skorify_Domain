@@ -79,6 +79,9 @@ export const MatchHasNotFinishedDomainEvent = DomainEventKind<MatchEntity>(
 export const MatchAlreadyClosedDomainEvent = DomainEventKind<MatchEntity>(
   "MatchAlreadyClosedDomainEvent",
 );
+export const MatchAlreadyCalculatedDomainEvent = DomainEventKind<MatchEntity>(
+  "MatchAlreadyCalculatedDomainEvent",
+);
 
 export const CalculatedMatchDomainEvent = DomainEventKind<MatchEntity>(
   "CalculatedMatchDomainEvent",
