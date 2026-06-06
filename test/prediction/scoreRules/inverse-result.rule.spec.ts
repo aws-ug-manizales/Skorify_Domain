@@ -23,6 +23,17 @@ describe("InverseResultRule", () => {
     expect(score).toBe(1);
   });
 
+  it("returns 0 when the winner is inverse but goal differences do not match", () => {
+    const rule = new InverseResultRule();
+
+    const score = rule.calculateScore({
+      prediction: { awayScore: 1, homeScore: 3 },
+      match: { awayScore: 1, homeScore: 0 },
+    });
+
+    expect(score).toBe(0);
+  });
+
   it("returns 0 when prediction outcome is same as match outcome", () => {
     const rule = new InverseResultRule();
 

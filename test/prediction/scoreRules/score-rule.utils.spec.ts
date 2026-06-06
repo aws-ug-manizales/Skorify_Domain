@@ -101,13 +101,22 @@ describe("score-rule.utils", () => {
   });
 
   describe("isInverseOutcome", () => {
-    it("returns true when outcomes are inverse", () => {
+    it("returns true when outcomes and goal differences are inverse", () => {
       expect(
         isInverseOutcome(
           { awayScore: 2, homeScore: 0 },
           { awayScore: 0, homeScore: 2 }
         )
       ).toBe(true);
+    });
+
+    it("returns false when outcomes are inverse but goal differences differ", () => {
+      expect(
+        isInverseOutcome(
+          { awayScore: 1, homeScore: 3 },
+          { awayScore: 1, homeScore: 0 }
+        )
+      ).toBe(false);
     });
 
     it("returns false when outcomes are same", () => {
