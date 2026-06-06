@@ -27,6 +27,7 @@ export interface PredictionAttributes extends BaseAttributes {
   homeScore: number;
   earnedPoints: number;
   hasExactResult: boolean;
+  isCalculated: boolean;
 }
 
 export interface SimulationPredictionAttribute {
@@ -42,6 +43,7 @@ export class PredictionEntity extends Entity {
   homeScore: number;
   earnedPoints: number;
   hasExactResult: boolean;
+  isCalculated: boolean;
 
   private constructor(attributes: PredictionAttributes) {
     super(attributes.id, new Date());
@@ -53,6 +55,7 @@ export class PredictionEntity extends Entity {
     this.homeScore = attributes.homeScore;
     this.earnedPoints = attributes.earnedPoints ?? 0;
     this.hasExactResult = attributes.hasExactResult;
+    this.isCalculated = attributes.isCalculated;
   }
 
   static build(params: PredictionAttributes): DomainEvent {
@@ -73,6 +76,7 @@ export class PredictionEntity extends Entity {
       earnedPoints: 0,
       hasExactResult: false,
       createdAt: new Date(),
+      isCalculated: false,
     });
   }
 
