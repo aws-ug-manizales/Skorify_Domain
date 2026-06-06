@@ -20,6 +20,7 @@ function makePrediction(params: {
     earnedPoints: 0,
     hasExactResult: false,
     createdAt: new Date("2026-01-01T00:00:00.000Z"),
+    isCalculated: false,
   });
 
   return (predictionDE as any).payload as PredictionEntity;

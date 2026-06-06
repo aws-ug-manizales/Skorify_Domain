@@ -5,7 +5,6 @@ export enum MatchStatus {
 	Scheduled = 'scheduled',
 	InProgress = 'in_progress',
 	Finished = 'finished',
-	Calculated = 'calculated',
 	Cancelled = 'cancelled',
 }
 
@@ -105,29 +104,11 @@ export class CancelledState implements MatchState {
 		return true;
 	}
 }
-export class CalculatedState implements MatchState {
-	canEdit(match: MatchEntity): boolean {
-		return false;
-	}
-
-	canBet(match: MatchEntity): boolean {
-		return false;
-	}
-
-	canChangeTeams(match: MatchEntity, hasPredictions: boolean): boolean {
-		return false;
-	}
-
-	isMatchClose(match: MatchEntity): boolean {
-		return true;
-	}
-}
 
 export const matchStateCollection: Record<MatchStatus, MatchState> = {
 	[MatchStatus.Draft]: new DraftState(),
 	[MatchStatus.Scheduled]: new ScheduledState(),
 	[MatchStatus.InProgress]: new InProgressState(),
 	[MatchStatus.Finished]: new FinishedState(),
-	[MatchStatus.Calculated]: new CalculatedState(),
 	[MatchStatus.Cancelled]: new CancelledState(),
 };
