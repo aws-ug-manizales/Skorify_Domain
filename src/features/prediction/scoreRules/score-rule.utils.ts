@@ -29,7 +29,7 @@ export function isInverseOutcome(a: Score, b: Score): boolean {
 
   if (oa === 0 || ob === 0) return false;
 
-  return oa === -ob;
+  return oa === -ob && Math.abs(goalDiff(a)) === Math.abs(goalDiff(b));
 }
 
 export function totalGoals(score: Score): number {

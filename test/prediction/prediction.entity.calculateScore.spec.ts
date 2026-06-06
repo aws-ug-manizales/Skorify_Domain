@@ -19,6 +19,7 @@ function makePrediction(params: {
     homeScore: params.homeScore,
     earnedPoints: 0,
     hasExactResult: false,
+    createdAt: new Date("2026-01-01T00:00:00.000Z"),
   });
 
   return (predictionDE as any).payload as PredictionEntity;
@@ -88,14 +89,13 @@ describe("PredictionEntity.calculateScore", () => {
       },
     },
     {
-      description: "one team goals correct, outcome wrong, but inverse consolation",
-      appliedRules: ["TeamGoals (+1 if any team goals match)", "InverseResult (+1)"],
+      description: "one team goals correct, outcome wrong, without inverse consolation",
+      appliedRules: ["TeamGoals (+1 if any team goals match)"],
       prediction: { awayScore: 2, homeScore: 0 },
       match: { awayScore: 2, homeScore: 3 },
-      expectedScore: 2,
+      expectedScore: 1,
       expectedBreakdown: {
         TeamGoalsRule: 1,
-        InverseResultRule: 1,
       },
     },
     {
