@@ -1,6 +1,6 @@
 export { MatchAttributes, MatchEntity, MatchStage } from './match.entity';
 export {
-  CalculatedState, CancelledState,
+  CancelledState,
   DraftState,
   FinishedState,
   InProgressState, MatchState,
