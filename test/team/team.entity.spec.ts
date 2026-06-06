@@ -4,7 +4,13 @@ import type { Id } from "../../src/core/entity";
 const teamId: Id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
 
 function buildTeam(name: string, shieldUrl?: string): TeamEntity {
-  const teamDE = TeamEntity.build({ id: teamId, name, shieldUrl });
+  const teamDE = TeamEntity.build({
+    id: teamId,
+    name,
+    shieldUrl,
+    tournamentId: "tttttttt-tttt-tttt-tttt-tttttttttttt" as Id,
+    createdAt: new Date(),
+  });
   return (teamDE as any).payload as TeamEntity;
 }
 

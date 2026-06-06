@@ -40,3 +40,14 @@ export const NotSavedUserEnrollmentDomainEvent = DomainEventKind(
 export const SavedUserEnrollmentDomainEvent = DomainEventKind<UserEnrollmentEntity>(
   'SavedUserEnrollmentDomainEvent',
 );
+
+// Domain events related to scoring a single prediction onto its enrollment.
+export const PredictionScoredDomainEvent = DomainEventKind<{
+  earned: number;
+  skipped: boolean;
+}>('PredictionScoredDomainEvent');
+
+// Domain event for resetting an enrollment's streak for a missed match.
+export const StreakResetForMatchDomainEvent = DomainEventKind(
+  'StreakResetForMatchDomainEvent',
+);

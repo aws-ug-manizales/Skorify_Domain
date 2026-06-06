@@ -6,6 +6,13 @@ export {
   UserEnrollmentAttributes,
   streakBonusRules
 } from "./user-enrollment.entity";
+export {
+  scoreEnrollmentTimeline,
+  TimelineEntry,
+  TimelineScore,
+  ScoredPrediction,
+  EnrollmentScore
+} from "./user-enrollment.score";
 export { UserEnrollmentContract } from "./user-enrollment.contract";
 
 export { CreateUserEnrollmentParam } from "./usecases/create-user-enrollment/create-user-enrollment.param";
@@ -31,3 +38,9 @@ export { GetEnrollmentsWithoutPredictionUsecase } from "./usecases/get-enrollmen
 
 export { IsAUserInTournamentInstanceParam } from "./usecases/is-a-user-in-tournament-instance/is-a-user-in-tournament-instance.param";
 export { IsAUserInTournamentInstanceUsecase } from "./usecases/is-a-user-in-tournament-instance/is-a-user-in-tournament-instance.usecase";
+
+export { ScorePredictionParam } from "./usecases/score-prediction/score-prediction.param";
+export { ScorePredictionUsecase } from "./usecases/score-prediction/score-prediction.usecase";
+
+export { ResetStreakForMatchParam } from "./usecases/reset-streak-for-match/reset-streak-for-match.param";
+export { ResetStreakForMatchUsecase } from "./usecases/reset-streak-for-match/reset-streak-for-match.usecase";

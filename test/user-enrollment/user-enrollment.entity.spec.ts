@@ -19,6 +19,7 @@ describe("UserEnrollmentEntity", () => {
       currentScore: initialScore,
       streak: initialStreak,
       maxStreak: 0,
+      createdAt: new Date(),
     });
 
     return (enrollmentDE as any).payload as UserEnrollmentEntity;
