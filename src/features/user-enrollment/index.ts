@@ -4,7 +4,7 @@ export {
   UserEnrollmentEntity,
   SimulationUserEnrollmentAttribute,
   UserEnrollmentAttributes,
-  streakBonusRules
+  streakBonusRules,
 } from "./user-enrollment.entity";
 export { UserEnrollmentContract } from "./user-enrollment.contract";
 
@@ -25,6 +25,9 @@ export { GetUserEnrollmentsByTournamentInstanceIdUsecase } from "./usecases/get-
 
 export { UpdateUserEnrollmentParam } from "./usecases/update-user-enrollment/update-user-enrollment.param";
 export { UpdateUserEnrollmentUsecase } from "./usecases/update-user-enrollment/update-user-enrollment.usecase";
+
+export { UpdateCurrentPositionParam } from "./usecases/update-current-position/update-current-position.param";
+export { UpdateCurrentPositionUsecase } from "./usecases/update-current-position/update-current-position.usecase";
 
 export { GetEnrollmentsWithoutPredictionParam } from "./usecases/get-enrollments-without-prediction/get-enrollments-without-prediction.param";
 export { GetEnrollmentsWithoutPredictionUsecase } from "./usecases/get-enrollments-without-prediction/get-enrollments-without-prediction.usecase";
