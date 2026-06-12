@@ -17,7 +17,7 @@ describe("InverseResultRule", () => {
 
     const score = rule.calculateScore({
       prediction: { awayScore: 0, homeScore: 2 },
-      match: { awayScore: 3, homeScore: 1 },
+      match: { awayScore: 2, homeScore: 0 },
     });
 
     expect(score).toBe(1);
