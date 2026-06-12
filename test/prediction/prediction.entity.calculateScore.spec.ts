@@ -2,162 +2,250 @@ import { PredictionEntity } from "../../src/features/prediction/prediction.entit
 import { PredictionRuleBreakdown } from "../../src/features/prediction/scoreRules/prediction-score.ruleset";
 
 function makePrediction(params: {
-  predictionId: string;
-  userId: string;
-  instanceId: string;
-  matchId: string;
-  awayScore: number;
-  homeScore: number;
+    predictionId: string;
+    userId: string;
+    instanceId: string;
+    matchId: string;
+    awayScore: number;
+    homeScore: number;
 }): PredictionEntity {
-  const predictionDE = PredictionEntity.build({
-    id: params.predictionId as any,
-    userId: params.userId as any,
-    userEnrollmentId: params.instanceId as any,
-    matchId: params.matchId as any,
-    tournamentInstanceId: "ti-1111-1111" as any,
-    awayScore: params.awayScore,
-    homeScore: params.homeScore,
-    earnedPoints: 0,
-    hasExactResult: false,
-    createdAt: new Date("2026-01-01T00:00:00.000Z"),
-    isCalculated: false,
-  });
+    const predictionDE = PredictionEntity.build({
+        id: params.predictionId as any,
+        userId: params.userId as any,
+        userEnrollmentId: params.instanceId as any,
+        matchId: params.matchId as any,
+        tournamentInstanceId: "ti-1111-1111" as any,
+        awayScore: params.awayScore,
+        homeScore: params.homeScore,
+        earnedPoints: 0,
+        hasExactResult: false,
+        createdAt: new Date("2026-01-01T00:00:00.000Z"),
+        isCalculated: false,
+    });
 
-  return (predictionDE as any).payload as PredictionEntity;
+    return (predictionDE as any).payload as PredictionEntity;
 }
 
 function asMap(breakdown: PredictionRuleBreakdown[]): Record<string, number> {
-  return breakdown.reduce<Record<string, number>>((acc, item) => {
-    acc[item.rule] = item.points;
-    return acc;
-  }, {});
+    return breakdown.reduce<Record<string, number>>((acc, item) => {
+        acc[item.rule] = item.points;
+        return acc;
+    }, {});
 }
 
 describe("PredictionEntity.calculateScore", () => {
-  const ids = {
-    predictionId: "11111111-1111-1111-1111-111111111111",
-    userId: "22222222-2222-2222-2222-222222222222",
-    instanceId: "44444444-4444-4444-4444-444444444444",
-    matchId: "33333333-3333-3333-3333-333333333333",
-  };
+    const ids = {
+        predictionId: "11111111-1111-1111-1111-111111111111",
+        userId: "22222222-2222-2222-2222-222222222222",
+        instanceId: "44444444-4444-4444-4444-444444444444",
+        matchId: "33333333-3333-3333-3333-333333333333",
+    };
 
-  const cases: Array<{
-    description: string;
-    appliedRules: string[];
-    prediction: { awayScore: number; homeScore: number };
-    match: { awayScore: number; homeScore: number };
-    expectedScore: number;
-    expectedBreakdown: Record<string, number>;
-  }> = [
-    {
-      description: "exact score + outcome correct",
-      appliedRules: ["WinnerDraw (+2)", "TeamGoals (+1 if any team goals match)", "ExactScore (+1)"],
-      prediction: { awayScore: 2, homeScore: 1 },
-      match: { awayScore: 2, homeScore: 1 },
-      expectedScore: 4,
-      expectedBreakdown: {
-        WinnerDrawRule: 2,
-        TeamGoalsRule: 1,
-        ExactScoreRule: 1,
-      },
-    },
-    {
-      description: "correct outcome only (away wins) does NOT get high scoring bonus unless exact score",
-      appliedRules: ["WinnerDraw (+2)"],
-      prediction: { awayScore: 1, homeScore: 0 },
-      match: { awayScore: 3, homeScore: 1 },
-      expectedScore: 2,
-      expectedBreakdown: {
-        WinnerDrawRule: 2,
-      },
-    },
-    {
-      description: "exact score with 4+ total goals gets high scoring bonus",
-      appliedRules: [
-        "WinnerDraw (+2)",
-        "TeamGoals (+1 if any team goals match)",
-        "ExactScore (+1)",
-        "HighScoringMatch (+1 if 4+ goals and exact score)",
-      ],
-      prediction: { awayScore: 3, homeScore: 1 },
-      match: { awayScore: 3, homeScore: 1 },
-      expectedScore: 5,
-      expectedBreakdown: {
-        WinnerDrawRule: 2,
-        TeamGoalsRule: 1,
-        ExactScoreRule: 1,
-        HighScoringMatchRule: 1,
-      },
-    },
-    {
-      description: "one team goals correct, outcome wrong, without inverse consolation",
-      appliedRules: ["TeamGoals (+1 if any team goals match)"],
-      prediction: { awayScore: 2, homeScore: 0 },
-      match: { awayScore: 2, homeScore: 3 },
-      expectedScore: 1,
-      expectedBreakdown: {
-        TeamGoalsRule: 1,
-      },
-    },
-    {
-      description: "inverse outcome consolation only",
-      appliedRules: ["InverseResult (+1)"],
-      prediction: { awayScore: 0, homeScore: 2 },
-      match: { awayScore: 3, homeScore: 1 },
-      expectedScore: 0,
-      expectedBreakdown: {
-      },
-    },
-    {
-      description: "draw predicted and draw happens",
-      appliedRules: ["WinnerDraw (+2)"],
-      prediction: { awayScore: 1, homeScore: 1 },
-      match: { awayScore: 0, homeScore: 0 },
-      expectedScore: 2,
-      expectedBreakdown: {
-        WinnerDrawRule: 2,
-      },
-    },
-    {
-      description: "high scoring match bonus only when match has 4+ goals and outcome correct",
-      appliedRules: ["WinnerDraw (+2)", "HighScoringMatch (+1 if 4+ goals and outcome correct)"],
-      prediction: { awayScore: 4, homeScore: 0 },
-      match: { awayScore: 3, homeScore: 1 },
-      expectedScore: 2,
-      expectedBreakdown: {
-        WinnerDrawRule: 2,
-      },
-    },
-  ];
+    const cases: Array<{
+        description: string;
+        appliedRules: string[];
+        prediction: { awayScore: number; homeScore: number };
+        match: { awayScore: number; homeScore: number };
+        expectedScore: number;
+        expectedBreakdown: Record<string, number>;
+    }> = [
+        {
+            description: "exact score + outcome correct",
+            appliedRules: ["WinnerDraw (+2)", "TeamGoals (+1 if any team goals match)", "ExactScore (+1)"],
+            prediction: { awayScore: 2, homeScore: 1 },
+            match: { awayScore: 2, homeScore: 1 },
+            expectedScore: 4,
+            expectedBreakdown: {
+                WinnerDrawRule: 2,
+                TeamGoalsRule: 1,
+                ExactScoreRule: 1,
+            },
+        },
+        {
+            description: "correct outcome only (away wins) does NOT get high scoring bonus unless exact score",
+            appliedRules: ["WinnerDraw (+2)"],
+            prediction: { awayScore: 1, homeScore: 0 },
+            match: { awayScore: 3, homeScore: 1 },
+            expectedScore: 2,
+            expectedBreakdown: {
+                WinnerDrawRule: 2,
+            },
+        },
+        {
+            description: "exact score with 4+ total goals gets high scoring bonus",
+            appliedRules: [
+                "WinnerDraw (+2)",
+                "TeamGoals (+1 if any team goals match)",
+                "ExactScore (+1)",
+                "HighScoringMatch (+1 if 4+ goals and exact score)",
+            ],
+            prediction: { awayScore: 3, homeScore: 1 },
+            match: { awayScore: 3, homeScore: 1 },
+            expectedScore: 5,
+            expectedBreakdown: {
+                WinnerDrawRule: 2,
+                TeamGoalsRule: 1,
+                ExactScoreRule: 1,
+                HighScoringMatchRule: 1,
+            },
+        },
+        {
+            description: "one team goals correct, outcome wrong, without inverse consolation",
+            appliedRules: ["TeamGoals (+1 if any team goals match)"],
+            prediction: { awayScore: 2, homeScore: 0 },
+            match: { awayScore: 2, homeScore: 3 },
+            expectedScore: 1,
+            expectedBreakdown: {
+                TeamGoalsRule: 1,
+            },
+        },
+        {
+            description: "inverse outcome consolation only",
+            appliedRules: ["InverseResult (+1)"],
+            prediction: { awayScore: 0, homeScore: 2 },
+            match: { awayScore: 3, homeScore: 1 },
+            expectedScore: 0,
+            expectedBreakdown: {},
+        },
+        {
+            description: "draw predicted and draw happens",
+            appliedRules: ["WinnerDraw (+2)"],
+            prediction: { awayScore: 1, homeScore: 1 },
+            match: { awayScore: 0, homeScore: 0 },
+            expectedScore: 2,
+            expectedBreakdown: {
+                WinnerDrawRule: 2,
+            },
+        },
+        {
+            description: "high scoring match bonus only when match has 4+ goals and outcome correct",
+            appliedRules: ["WinnerDraw (+2)", "HighScoringMatch (+1 if 4+ goals and outcome correct)"],
+            prediction: { awayScore: 4, homeScore: 0 },
+            match: { awayScore: 3, homeScore: 1 },
+            expectedScore: 2,
+            expectedBreakdown: {
+                WinnerDrawRule: 2,
+            },
+        },
+    ];
 
-  for (const testCase of cases) {
-    it(`${testCase.description} | rules: ${testCase.appliedRules.join(" + ")}`, () => {
-      const prediction = makePrediction({
-        ...ids,
-        awayScore: testCase.prediction.awayScore,
-        homeScore: testCase.prediction.homeScore,
-      });
+    for (const testCase of cases) {
+        it(`${ testCase.description } | rules: ${ testCase.appliedRules.join(" + ") }`, () => {
+            const prediction = makePrediction({
+                ...ids,
+                awayScore: testCase.prediction.awayScore,
+                homeScore: testCase.prediction.homeScore,
+            });
 
-      const result = prediction.calculateScore(testCase.match.awayScore, testCase.match.homeScore, 0);
+            const result = prediction.calculateScore(testCase.match.awayScore, testCase.match.homeScore, 0);
 
-      expect(prediction.earnedPoints).toBe(testCase.expectedScore);
-      expect(result.total).toBe(testCase.expectedScore);
-      expect(asMap(result.breakdown)).toEqual(testCase.expectedBreakdown);
+            expect(prediction.earnedPoints).toBe(testCase.expectedScore);
+            expect(result.total).toBe(testCase.expectedScore);
+            expect(asMap(result.breakdown)).toEqual(testCase.expectedBreakdown);
+        });
+    }
+
+    // --- lite cases: prediction | match | expectedPoints ---
+    const liteCases: Array<{
+        description: string;
+        prediction: { home: number; away: number };
+        match: { home: number; away: number };
+        streak: number;
+        expectedPoints: number;
+    }> = [
+        {
+            description: 'Guess one team goals',
+            prediction: { home: 2, away: 1 },
+            match: { home: 0, away: 1 },
+            streak: 0,
+            expectedPoints: 1
+        },
+        {
+            description: 'Draw match',
+            prediction: { home: 1, away: 1 },
+            match: { home: 1, away: 1 },
+            streak: 0,
+            expectedPoints: 4
+        },
+        {
+            description: 'Guess winner and one team goals',
+            prediction: { home: 3, away: 2 },
+            match: { home: 3, away: 1 },
+            streak: 0,
+            expectedPoints: 3
+        },
+        {
+            description: 'Guess winner and exact score',
+            prediction: { home: 2, away: 1 },
+            match: { home: 2, away: 1 },
+            streak: 0,
+            expectedPoints: 4
+        },
+        {
+            description: 'Guess winner and without score',
+            prediction: { home: 2, away: 1 },
+            match: { home: 3, away: 2 },
+            streak: 0,
+            expectedPoints: 2
+        },
+        {
+            description: 'Guess winner and exact score with high scoring',
+            prediction: { home: 3, away: 1 },
+            match: { home: 3, away: 1 },
+            streak: 0,
+            expectedPoints: 5
+        },
+        {
+            description: 'Dont guess neither winner nor score',
+            prediction: { home: 3, away: 2 },
+            match: { home: 1, away: 4 },
+            streak: 0,
+            expectedPoints: 0
+        },
+        {
+            description: 'Guess inverse score',
+            prediction: { home: 3, away: 2 },
+            match: { home: 2, away: 3 },
+            streak: 0,
+            expectedPoints: 1
+        },
+    ];
+
+    for (const lc of liteCases) {
+        fit(
+            `${ lc.description } > [lite] pred ${ lc.prediction.home }-${ lc.prediction.away } | match ${ lc.match.home }-${ lc.match.away } | streak ${ lc.streak } → ${ lc.expectedPoints } pts`,
+            () => {
+                const prediction = makePrediction({
+                    ...ids,
+                    homeScore: lc.prediction.home,
+                    awayScore: lc.prediction.away,
+                });
+
+                const result = prediction.calculateScore(lc.match.away, lc.match.home, lc.streak);
+
+                const breakdown = asMap(result.breakdown);
+                const appliedRules = result.breakdown.map((b) => `${ b.rule }: +${ b.points }`);
+                console.log("Applied rules:", appliedRules.length ? appliedRules.join(", ") : "(none)");
+                console.log("Breakdown:", breakdown);
+
+                expect(result.total).toBe(lc.expectedPoints);
+                expect(prediction.earnedPoints).toBe(lc.expectedPoints + lc.streak);
+            },
+        );
+    }
+
+    it("should add streak bonus points to earnedPoints", () => {
+        const prediction = makePrediction({
+            ...ids,
+            awayScore: 2,
+            homeScore: 1,
+        });
+
+        const streakBonus = 2;
+        const result = prediction.calculateScore(2, 1, streakBonus);
+
+        // 4 (exact) + 2 (streak) = 6
+        expect(prediction.earnedPoints).toBe(6);
+        expect(result.total).toBe(4); // result.total is just ruleset total
     });
-  }
-
-  it("should add streak bonus points to earnedPoints", () => {
-    const prediction = makePrediction({
-        ...ids,
-        awayScore: 2,
-        homeScore: 1,
-      });
-
-      const streakBonus = 2;
-      const result = prediction.calculateScore(2, 1, streakBonus);
-
-      // 4 (exact) + 2 (streak) = 6
-      expect(prediction.earnedPoints).toBe(6);
-      expect(result.total).toBe(4); // result.total is just ruleset total
-  });
 });
