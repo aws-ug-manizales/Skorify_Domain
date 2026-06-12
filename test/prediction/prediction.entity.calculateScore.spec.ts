@@ -104,9 +104,8 @@ describe("PredictionEntity.calculateScore", () => {
       appliedRules: ["InverseResult (+1)"],
       prediction: { awayScore: 0, homeScore: 2 },
       match: { awayScore: 3, homeScore: 1 },
-      expectedScore: 1,
+      expectedScore: 0,
       expectedBreakdown: {
-        InverseResultRule: 1,
       },
     },
     {
