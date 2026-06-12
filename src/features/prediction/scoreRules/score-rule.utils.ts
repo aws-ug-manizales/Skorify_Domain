@@ -24,12 +24,7 @@ export function isExactScore(a: Score, b: Score): boolean {
 }
 
 export function isInverseOutcome(a: Score, b: Score): boolean {
-  const oa = outcome(a);
-  const ob = outcome(b);
-
-  if (oa === 0 || ob === 0) return false;
-
-  return oa === -ob && Math.abs(goalDiff(a)) === Math.abs(goalDiff(b));
+  return a.awayScore == b.homeScore && a.homeScore == b.awayScore;
 }
 
 export function totalGoals(score: Score): number {
